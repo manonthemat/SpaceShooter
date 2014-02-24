@@ -5,6 +5,8 @@ public class GameController : MonoBehaviour {
 
 	public GameObject hazard;
 	public GameObject bigHazard;
+	public GameObject fastHazard;
+	public GameObject ronda;
 	public Vector3 spawnValue;
 	public int hazardCount;
 	public float spawnWait;
@@ -40,6 +42,7 @@ public class GameController : MonoBehaviour {
 		}
 	}
 
+
 	IEnumerator SpawnWaves() {
 		yield return new WaitForSeconds (startWait);
 		while(true) {
@@ -48,8 +51,14 @@ public class GameController : MonoBehaviour {
 				Vector3 spawnPosition = new Vector3 (Random.Range(-spawnValue.x, spawnValue.x), spawnValue.y, spawnValue.z);
 				Quaternion spawnRotation = Quaternion.identity;
 				float r = Random.value;
-				if (r <= 0.8) {
+				if (r <= 0.6) {
 					Instantiate (hazard, spawnPosition, spawnRotation);
+				}
+				else if (r > 0.6 && r < 0.8) {
+					Instantiate (fastHazard, spawnPosition, spawnRotation);
+				}
+				else if (r >= 0.8 && r < 0.95) {
+					Instantiate (ronda, spawnPosition, spawnRotation);
 				}
 				else {
 					Instantiate (bigHazard, spawnPosition, spawnRotation);
@@ -65,10 +74,12 @@ public class GameController : MonoBehaviour {
 		}
 	}
 
+
 	public void AddScore(int newScoreValue) {
 		score += newScoreValue;
 		UpdateScore ();
 	}
+
 
 	void UpdateLevel() {
 		level++;

@@ -1,12 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+
 public class DestroyByContact : MonoBehaviour {
 
 	public GameObject explosion;
 	public GameObject playerExplosion;
 	public int scoreValue;
 	private GameController gameController;
+
 
 	void Start() {
 		GameObject gameControllerObject = GameObject.FindWithTag ("GameController");
@@ -16,8 +18,8 @@ public class DestroyByContact : MonoBehaviour {
 		else {
 			Debug.Log("Can not find gameControllerObject");
 		}
-
 	}
+
 
 	void OnTriggerEnter(Collider other) {
 		if (other.tag == "Boundary") {
