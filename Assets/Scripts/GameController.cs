@@ -96,4 +96,8 @@ public class GameController : MonoBehaviour {
 		gameOver = true;
 	}
 
+	public int GetLevel() {
+		return level;
+	}
+
 }
