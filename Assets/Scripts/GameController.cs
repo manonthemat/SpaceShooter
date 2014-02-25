@@ -64,6 +64,7 @@ public class GameController : MonoBehaviour {
 					Instantiate (bigHazard, spawnPosition, spawnRotation);
 				}
 				if (gameOver) {
+					yield return new WaitForSeconds(3);
 					restartText.text = "Press 'FIRE' for Restart";
 					restart = true;
 					break;
