@@ -57,7 +57,7 @@ public class GameController : MonoBehaviour {
 				else if (r > 0.6 && r < 0.8) {
 					Instantiate (fastHazard, spawnPosition, spawnRotation);
 				}
-				else if (r >= 0.8 && r < 0.95) {
+				else if (r >= 0.8 && r < 0.85) {
 					Instantiate (ronda, spawnPosition, spawnRotation);
 				}
 				else {
