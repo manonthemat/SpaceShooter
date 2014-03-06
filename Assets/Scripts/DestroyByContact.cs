@@ -9,6 +9,7 @@ public class DestroyByContact : MonoBehaviour {
 	public int scoreValue;
 	public int hitPoints;
 	private GameController gameController;
+	public GameObject bolt;
 
 
 	void Start() {
@@ -35,9 +36,7 @@ public class DestroyByContact : MonoBehaviour {
 		}
 		else if (other.tag == "bolt") {
 			Debug.Log("damage!");
-			hitPoints -= 50;
-			//bolt = other.GetComponent <GameObject>();
-			//hitPoints -= bolt.damage;
+			hitPoints -= other.GetComponent<DoDamage>().damage;
 		}
 		if (hitPoints <= 0) {
 			gameController.AddScore (scoreValue);

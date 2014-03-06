@@ -7,6 +7,7 @@ public class GameController : MonoBehaviour {
 	public GameObject bigHazard;
 	public GameObject fastHazard;
 	public GameObject ronda;
+	public GameObject enemyShip;
 	public Vector3 spawnValue;
 	public int hazardCount;
 	public float spawnWait;
@@ -50,24 +51,36 @@ public class GameController : MonoBehaviour {
 			for(int i = 0; i < hazardCount * level; i++) {
 				Vector3 spawnPosition = new Vector3 (Random.Range(-spawnValue.x, spawnValue.x), spawnValue.y, spawnValue.z);
 				Quaternion spawnRotation = Quaternion.identity;
-				float r = Random.value;
-				if (r <= 0.6) {
-					Instantiate (hazard, spawnPosition, spawnRotation);
-				}
-				else if (r > 0.6 && r < 0.8) {
-					Instantiate (fastHazard, spawnPosition, spawnRotation);
-				}
-				else if (r >= 0.8 && r < 0.85) {
-					Instantiate (ronda, spawnPosition, spawnRotation);
+				if (level % 1000 == 0) {
+					// yes, I don't expect to play to level 1000 at the moment
+					// every 5th level or so, a new big enemyShip should get instantiated
+					Vector3 spawnPositionE = new Vector3 (0.0f, 10.0f, 8.0f);
+					Instantiate(enemyShip, spawnPositionE, spawnRotation);
+					i = hazardCount * level;
+					// instanstiate mini-boss and start a co-routine that ensures that the player destroys it,
+					// before the next wave spawns
+					yield return new WaitForSeconds(3);
 				}
 				else {
-					Instantiate (bigHazard, spawnPosition, spawnRotation);
-				}
-				if (gameOver) {
-					yield return new WaitForSeconds(3);
-					restartText.text = "Press 'FIRE' for Restart";
-					restart = true;
-					break;
+					float r = Random.value;
+					if (r <= 0.6) {
+						Instantiate (hazard, spawnPosition, spawnRotation);
+					}
+					else if (r > 0.6 && r < 0.8) {
+						Instantiate (fastHazard, spawnPosition, spawnRotation);
+					}
+					else if (r >= 0.8 && r < 0.85) {
+						Instantiate (ronda, spawnPosition, spawnRotation);
+					}
+					else {
+						Instantiate (bigHazard, spawnPosition, spawnRotation);
+					}
+					if (gameOver) {
+						yield return new WaitForSeconds(3);
+						restartText.text = "Press 'FIRE' for Restart";
+						restart = true;
+						break;
+					}
 				}
 				yield return new WaitForSeconds(spawnWait);
 			}
