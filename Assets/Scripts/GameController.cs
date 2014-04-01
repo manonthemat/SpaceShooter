@@ -1,12 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
+//using KiiCorp.Cloud.Storage;
 
 public class GameController : MonoBehaviour {
 
 	public GameObject hazard;
 	public GameObject bigHazard;
 	public GameObject fastHazard;
-	public GameObject ronda;
+	public GameObject royce;
+	public GameObject royler;
 	public GameObject enemyShip;
 	public Vector3 spawnValue;
 	public int hazardCount;
@@ -22,6 +24,11 @@ public class GameController : MonoBehaviour {
 	private bool restart;
 	private int score;
 
+
+//	void Awake() {
+//		Kii.Initialize(Kii.AppId, Kii.AppKey, Kii.Site.US);
+//		Debug.Log("Kii initialized");
+//	}
 
 	void Start() {
 		gameOver = false;
@@ -51,15 +58,12 @@ public class GameController : MonoBehaviour {
 			for(int i = 0; i < hazardCount * level; i++) {
 				Vector3 spawnPosition = new Vector3 (Random.Range(-spawnValue.x, spawnValue.x), spawnValue.y, spawnValue.z);
 				Quaternion spawnRotation = Quaternion.identity;
-				if (level % 10000000 == 0) {
-					// yes, I don't expect to play to level 10000000 at the moment
-					// every 5th level or so, a new big enemyShip should get instantiated
-					Vector3 spawnPositionE = new Vector3 (0.0f, 10.0f, 8.0f);
-					Instantiate(enemyShip, spawnPositionE, spawnRotation);
+				if (level % 10 == 0) {
+					Instantiate(royce, spawnPosition, spawnRotation);
 					i = hazardCount * level;
 					// instanstiate mini-boss and start a co-routine that ensures that the player destroys it,
 					// before the next wave spawns
-					yield return new WaitForSeconds(3);
+					yield return new WaitForSeconds(6);
 				}
 				else {
 					float r = Random.value;
@@ -69,15 +73,15 @@ public class GameController : MonoBehaviour {
 					else if (r > 0.6 && r < 0.8) {
 						Instantiate (fastHazard, spawnPosition, spawnRotation);
 					}
-					else if (r >= 0.8 && r < 0.80001) {
-						Instantiate (ronda, spawnPosition, spawnRotation);
+					else if (r >= 0.8 && r < 0.9) {
+						Instantiate (royler, spawnPosition, spawnRotation);
 					}
 					else {
 						Instantiate (bigHazard, spawnPosition, spawnRotation);
 					}
 					if (gameOver) {
 						yield return new WaitForSeconds(3);
-						restartText.text = "Press 'FIRE' for Restart";
+						restartText.text = "Tap screen for Restart";
 						restart = true;
 						break;
 					}
