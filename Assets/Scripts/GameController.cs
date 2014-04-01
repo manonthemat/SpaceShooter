@@ -51,8 +51,8 @@ public class GameController : MonoBehaviour {
 			for(int i = 0; i < hazardCount * level; i++) {
 				Vector3 spawnPosition = new Vector3 (Random.Range(-spawnValue.x, spawnValue.x), spawnValue.y, spawnValue.z);
 				Quaternion spawnRotation = Quaternion.identity;
-				if (level % 1000 == 0) {
-					// yes, I don't expect to play to level 1000 at the moment
+				if (level % 10000000 == 0) {
+					// yes, I don't expect to play to level 10000000 at the moment
 					// every 5th level or so, a new big enemyShip should get instantiated
 					Vector3 spawnPositionE = new Vector3 (0.0f, 10.0f, 8.0f);
 					Instantiate(enemyShip, spawnPositionE, spawnRotation);
@@ -69,7 +69,7 @@ public class GameController : MonoBehaviour {
 					else if (r > 0.6 && r < 0.8) {
 						Instantiate (fastHazard, spawnPosition, spawnRotation);
 					}
-					else if (r >= 0.8 && r < 0.85) {
+					else if (r >= 0.8 && r < 0.80001) {
 						Instantiate (ronda, spawnPosition, spawnRotation);
 					}
 					else {

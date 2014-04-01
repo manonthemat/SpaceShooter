@@ -14,6 +14,15 @@ public class PlayerController : MonoBehaviour {
 	public Transform shotSpawn;
 	public float fireRate;
 	private float nextFire;
+	private Vector3 zeroAcceleration;
+	private Vector3 currentAcceleration;
+	private float HorizontalAxis = 0;
+	private float VerticalAxis = 0;
+
+	void Start() {
+		zeroAcceleration = Input.acceleration;
+		currentAcceleration = Vector3.zero;
+	}
 
 	void Update() {
 		if (Input.GetButton("Fire1") && Time.time > nextFire) {
@@ -24,8 +33,11 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	void FixedUpdate () {
-		float moveHorizontal = Input.GetAxis("Horizontal");
-		float moveVertical = Input.GetAxis("Vertical");
+		currentAcceleration = Vector3.Lerp(currentAcceleration, Input.acceleration - zeroAcceleration, Time.deltaTime);
+		float moveHorizontal = Input.acceleration.x;
+//		float moveVertical = Mathf.Clamp (currentAcceleration.x * 10, -1, 1);
+		float moveVertical = Input.acceleration.y;
+//		float moveVertical = currentAcceleration.y;
 
 		Vector3 movement = new Vector3 (moveHorizontal, 0.0f, moveVertical);
 		rigidbody.velocity = movement * speedFactor;
